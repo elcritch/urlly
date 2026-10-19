@@ -6,6 +6,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
+        nim: [stable, devel]
 
     runs-on: ${{ matrix.os }}
 
@@ -14,6 +15,7 @@ jobs:
     - uses: jiro4989/setup-nim-action@v1
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - run: nimble test -y
-    - run: nimble test --gc:orc -y
+        nim-version: ${{ matrix.nim }}
+    - run: nim c -r --mm:arc tests/test.nim
+    - run: nim c -r --mm:orc tests/test.nim
     - run: nim js -r tests/test.nim
