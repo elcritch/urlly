@@ -11,11 +11,12 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v3
-    - uses: jiro4989/setup-nim-action@v1
+    - uses: actions/checkout@v6
+    - uses: jiro4989/setup-nim-action@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         nim-version: ${{ matrix.nim }}
+        use-nightlies: true
     - run: nim c -r --mm:arc tests/test.nim
     - run: nim c -r --mm:orc tests/test.nim
     - run: nim js -r tests/test.nim
